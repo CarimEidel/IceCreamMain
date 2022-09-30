@@ -19,7 +19,7 @@
 
    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
-   
+
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
    <script src="js/datatable.js"></script>
@@ -32,7 +32,7 @@
          
          <button class="accordion"><i class="fas fa-tachometer"></i> Dashboard</button>
             <div class="panel">
-               <a href="adminIndex.jsp"><button class="panel-button">Stats</button></a>
+               <a href="adminindex.html"><button class="panel-button">Stats</button></a>
                <a href="#content2"><button class="panel-button">Add Product</button></a>
             </div>
 
@@ -81,7 +81,7 @@
     
    <div id="seller-table" class="section-padding2">
       <table id="table_id" class="display">
-         <h4>All Products</h4>
+         <h4>Rejected Products</h4>
          <thead>
             <tr>
                <th>Product Id</th>
@@ -99,7 +99,7 @@
                 Class.forName("com.mysql.jdbc.Driver");
                 Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecommerce?serverTimezone=UTC", "root", "0000");
                 Statement st = con.createStatement();
-                String sql = "SELECT * FROM products ORDER BY created_at";
+                String sql = "SELECT * FROM products WHERE status = 'Rejected'";
                 ResultSet rs = st.executeQuery(sql);
 			%>
          		<tr>
@@ -120,18 +120,8 @@
       				<td><%=price%></td>
       				<td><%=date%></td>
       				<td>
-                  <a class="fa fa-eye"> <button class="view" type ="button" onclick="openPopup(<%=id%>)"> View&nbsp;</button></a>
-	                  <div class="popup" id="<%=id%>">
-	                  	<%-- Palagay na lang ng filename --%>
-	                  	<img src="<%=filename%>">
-	                  	<input type="hidden" name="id" value="<%=id%>">
-	                  	<p> Name:<%= name%></p>
-	                  	<p> Category:<%= category%></p>
-	                  	<p> Stock:<%= stock%></p>
-	                  	<p> Price: <%= price%></p>
-	                  	<button class="reject" onclick="closePopup(<%=id%>)"> Close &nbsp;</button>
-	                  </div>
-                  <a href="deleteProduct.jsp?id=<%=id %>" class="fa fa-trash" style="color:red;">Delete</a>
+                  <a href="#" class="fa fa-edit"> Update &nbsp;</a>
+                     <a href="deleteProduct.jsp?id=<%=id %>" class="fa fa-trash" style="color:red;">Delete</a>
                		</td> 
             	</tr>
             	<%
@@ -146,7 +136,6 @@
    
 </div>
 
-<script src="js/manageProduct.js"></script>
 <script src="js/sidebar.js"></script>
 <script src="js/seller_page_header.js"></script>
 </body>

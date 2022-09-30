@@ -69,9 +69,10 @@
    <div id="manage-navbar">
       <nav>
          <ul id="navbar">
-           <li><a href ="manageProduct.jsp"><button class="btn btn-primary" data-toggle="collapse" data-target="manageProduct.jsp">All</button></a></li>
+            <li><a href ="manageProduct.jsp"><button class="btn btn-primary" data-toggle="collapse" data-target="manageProduct.jsp">All</button></a></li>
             <li><a href ="manageAccepted.jsp"><button class="btn btn-primary" data-toggle="collapse" data-target="#demo">Accepted</button></a></li>
             <li><a href ="managePending.jsp"><button class="btn btn-primary" data-toggle="collapse" data-target="#demo">Pending</button></a></li>
+            <li><a href ="manageRejected.jsp"><button class="btn btn-primary" data-toggle="collapse" data-target="#demo">Rejected</button></a></li>
             <li><button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#demo2">Reported</button></li>
          </ul>
       </nav>
@@ -119,8 +120,7 @@
       				<td><%=price%></td>
       				<td><%=date%></td>
       				<td>
-                  <a href="#" class="fa fa-edit"> Update &nbsp;</a>
-                  <a href="#" class="fa fa-trash" style="color: red;"> Delete</a>
+                    <a href="deleteProduct.jsp?id=<%=id %>" class="fa fa-trash" style="color:red;">Delete</a>
                		</td> 
             	</tr>
             	<%

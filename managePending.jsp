@@ -16,7 +16,6 @@
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
    <link rel="stylesheet" href="css/dataTables.css">
-   <link rel="stylesheet" href="css/pending.css" />
 
    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
@@ -71,9 +70,10 @@
    <div id="manage-navbar">
       <nav>
          <ul id="navbar">
-            <li><a href ="manageProduct.jsp"><button class="btn btn-primary" data-toggle="collapse" data-target="manageProduct.jsp">All</button></a></li>
+             <li><a href ="manageProduct.jsp"><button class="btn btn-primary" data-toggle="collapse" data-target="manageProduct.jsp">All</button></a></li>
             <li><a href ="manageAccepted.jsp"><button class="btn btn-primary" data-toggle="collapse" data-target="#demo">Accepted</button></a></li>
             <li><a href ="managePending.jsp"><button class="btn btn-primary" data-toggle="collapse" data-target="#demo">Pending</button></a></li>
+            <li><a href ="manageRejected.jsp"><button class="btn btn-primary" data-toggle="collapse" data-target="#demo">Rejected</button></a></li>
             <li><button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#demo2">Reported</button></li>
          </ul>
       </nav>
@@ -114,6 +114,7 @@
 					int stock= rs.getInt("product_stock");
 					float price= rs.getFloat("price");
 					String date= rs.getString("created_at");
+					String status= rs.getString("status");
         		     %>
                     <td><%=id%></td>
                 	<td><%=filename%></td>
@@ -124,19 +125,21 @@
       				<td><%=price%></td>
       				<td><%=date%></td>
       				<td>
-                  <a class="fa fa-eye"><button class="view" type ="button" onclick="openPopup()">  View &nbsp;</button></a>
-                  <%--<form>--%>
-	                  <div class="popup" id="popup">
+                  <a class="fa fa-eye"><button class="view" type ="button" onclick="openPopup(<%=id%>)">  View &nbsp;</button></a>
+	                  <form method="post" action="updatePending.jsp">
+	                  <div class="popup" id="<%=id%>">
 	                  	<img src="image/hero-bg.png">
+	                  	<input type="hidden" name="id" value="<%=id%>">
 	                  	<p> Name: <%= name%></p>
 	                  	<p> Category: <%=category%> </p>
 	                  	<p> Seller: <%=seller_name%> </p>
-	                  	<p> Stock: <%=stock%></p>
-	                  	<p>Price: <%=price%></p>
-	                  	<button class="accept" type ="button" onclick="closePopup()"> Accept &nbsp;</button>
-	                  	<button class="reject" type ="button" onclick="closePopup()"> Reject &nbsp;</button>
+	                  	<p> Stock: <%=stock%> </p>
+	                  	<p> Price: <%=price%> </p>
+	                  	<input type="hidden" name="status" value="<%=status%>">
+	                  	<button class="accept" type ="submit" name="decide" value="accept" onclick="closePopup(<%=id%>)"> Accept &nbsp;</button>
+	                  	<button class="reject" type ="submit" name ="decide" value="reject" onclick="closePopup(<%=id%>)"> Reject &nbsp;</button>
 	                  </div>
-                  <%--<form>--%>
+	                  	</form>
                		</td> 
             	</tr>
             	<%
@@ -150,16 +153,8 @@
    </div>
    
 </div>
-<script>
-let popup = document.getElementById("popup");
 
-function openPopup(){
-	popup.classList.add("open-popup");
-}
-function closePopup(){
-	popup.classList.remove("open-popup");
-}
-</script>
+<script src="js/manageProduct.js"></script>
 <script src="js/sidebar.js"></script>
 <script src="js/seller_page_header.js"></script>
 </body>
